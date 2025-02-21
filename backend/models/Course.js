@@ -5,7 +5,7 @@ const courseSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
-    teacher: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    teacher: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // so which teacher made this
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // References to User documents
   },
   { timestamps: true }

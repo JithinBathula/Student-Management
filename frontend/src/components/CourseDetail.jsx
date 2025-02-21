@@ -23,6 +23,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 
+
 const CourseDetail = () => {
   const { token, user } = useAuth();
   const { courseId } = useParams();
@@ -143,6 +144,8 @@ const CourseDetail = () => {
             </IconButton>
           </Box>
 
+
+            
           {/* Assignments Section */}
           <Box sx={{ mt: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>

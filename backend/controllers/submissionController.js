@@ -16,6 +16,7 @@ export const submitAssignment = async (req, res) => {
     if (!assignment) {
       return res.status(404).json({ message: 'Assignment not found.' });
     }
+
     // Ensure the student is enrolled in the course associated with the assignment
     const course = await Course.findById(assignment.course);
     if (!course || !course.students.includes(req.user.userId)) {
@@ -33,8 +34,8 @@ export const submitAssignment = async (req, res) => {
     res.status(500).json({ message: 'Error submitting assignment.' });
   }
 };
-// controllers/submissionController.js
 
+// for teachers to grade
 export const gradeSubmission = async (req, res) => {
   if (req.user.role !== 'teacher') {
     return res.status(403).json({ message: 'Only teachers can grade submissions.' });
@@ -99,7 +100,6 @@ export const getSubmissionsForAssignment = async (req, res) => {
 
 export const getSingleSubmission = async (req, res) => {
   try {
-    // teachers or students might want to fetch a single submission
     const submission = await Submission.findById(req.params.submissionId)
       .populate('student', 'name email')
       .populate('assignment');
@@ -107,12 +107,6 @@ export const getSingleSubmission = async (req, res) => {
     if (!submission) {
       return res.status(404).json({ message: 'Submission not found.' });
     }
-
-    // If you need role logic, for example:
-    // - If teacher, must verify they own the course
-    // - If student, must verify it's their submission
-    // For now, we assume teacher can fetch any submission for grading:
-    // or if (req.user.role === 'student' && submission.student.toString() !== req.user.userId) { ...deny... }
 
     res.json(submission);
   } catch (error) {
